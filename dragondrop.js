@@ -7,33 +7,34 @@
  */
 
 ;(function (f) {
-if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module depending on jQuery.
-    define(['jquery'], f);
-} else {
-    // No AMD. Register plugin with global jQuery object.
-    f(jQuery);
+    /* global jQuery, define */
+    'use strict';
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module depending on jQuery.
+        define(['jquery'], f);
+    } else {
+        // No AMD. Register plugin with global jQuery object.
+        f(jQuery);
+    }
 }
-}(function ($) {
-    $.fn.dragonDrop = function(method) {
 
+(function ($) {
+    'use strict';
+
+    $.fn.dragonDrop = function(method) {
         var methods = {
 
             init : function(options) {
                 this.dragonDrop.settings = $.extend({}, this.dragonDrop.defaults, options);
                 return this.each(function() {
-                    var $el = $(this).addClass('dragonDrop'),
-                        el = this,
-                        settings = $.fn.dragonDrop.settings;
+                        var $el = $(this).addClass('dragonDrop'),
+                        settings = $.fn.dragonDrop.settings,
                         $menuElement = $el.find(settings.submenuEl).addClass('dragonDrop-submenu').hide(),
                         $triggerElement = $el.find(settings.triggerEl).addClass('dragonDrop-trigger');
-
 
                     // Open on click
                     $el.on(settings.action,  $triggerElement, function(){
                         // Close click menus if clicked again
-                           
-
                         if(settings.action == 'click' && $el.hasClass('dragonDrop-open')){
                             settings.beforeHide.call(this);
                             $el.removeClass('dragonDrop-open');
@@ -51,6 +52,7 @@ if (typeof define === 'function' && define.amd) {
                         settings.beforeShow.call(this);
                         $el.addClass('dragonDrop-open');
                         $menuElement.show();
+
                         settings.afterShow.call(this);
 
                         return false;
@@ -59,7 +61,7 @@ if (typeof define === 'function' && define.amd) {
                     // Close if outside click
                     $(document).on('click', function(){
                         settings.beforeHide.call(this);
-                        $('.dragonDrop-open').removeClass('dragonDrop-open')
+                        $('.dragonDrop-open').removeClass('dragonDrop-open');
                         $menuElement.hide();
                         settings.afterHide.call(this);
                     });
@@ -67,7 +69,6 @@ if (typeof define === 'function' && define.amd) {
                     // If hover
                     if(settings.action == 'mouseenter'){
                         $el.on('mouseleave', function(){
-                            console.log( 'mouseleave' );
                             settings.beforeHide.call(this);
                             $el.removeClass('dragonDrop-open');
                             $menuElement.hide();

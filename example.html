@@ -6,19 +6,35 @@
 	<script src="dragondrop.js"></script>
 </head>
 <body>
-  <div data-menu class="menu" >
-    
-        <a href="#" data-menu-trigger>Dropdown</a>
-        <ul data-menu-content>
-            <li><a href="#">Some Action 1</a></li>
-            <li><a href="#">Some Action 2</a></li>
-            <li><a href="#">Some Action 3</a></li>
-            <li><a href="#">Some Action 4</a></li>
-        </ul>
-    
-</div>
+	<div data-menu class="menu" >
+		<a href="#" data-menu-trigger>Dropdown</a>
+		<ul data-menu-content>
+			<li><a href="#">Some Action 1</a></li>
+			<li><a href="#">Some Action 1</a></li>
+			<li><a href="#">Some Action 1</a></li>
+			<li><a href="#">Some Action 1</a></li>
+		</ul>
+	</div>
+	<div data-menu class="menu" >
+		<a href="#" data-menu-trigger>Dropdown</a>
+		<ul data-menu-content>
+			<li><a href="#">Some Action 3</a></li>
+			<li><a href="#">Some Action 3</a></li>
+			<li><a href="#">Some Action 3</a></li>
+			<li><a href="#">Some Action 3</a></li>
+		</ul>
+	</div>
+	<div data-menu class="menu" >
+		<a href="#" data-menu-trigger>Dropdown</a>
+		<ul data-menu-content>
+			<li><a href="#">Some Action 2</a></li>
+			<li><a href="#">Some Action 2</a></li>
+			<li><a href="#">Some Action 2</a></li>
+			<li><a href="#">Some Action 2</a></li>
+		</ul>
+	</div>
 </body>
 <script type="text/javascript">
-	$('[data-menu]').dragonDrop({action: 'mouseenter'});
+$('[data-menu]').dragonDrop({action: 'click'});
 </script>
 </html>
