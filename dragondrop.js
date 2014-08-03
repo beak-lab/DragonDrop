@@ -22,33 +22,35 @@ if (typeof define === 'function' && define.amd) {
             init : function(options) {
                 this.dragonDrop.settings = $.extend({}, this.dragonDrop.defaults, options);
                 return this.each(function() {
-                    var $el = $(this),
-                         el = this,
-                         settings = $.fn.dragonDrop.settings;
+                    var $el = $(this).addClass('dragonDrop'),
+                        el = this,
+                        settings = $.fn.dragonDrop.settings;
+                        $menuElement = $el.find(settings.submenuEl).addClass('dragonDrop-submenu').hide(),
+                        $triggerElement = $el.find(settings.triggerEl).addClass('dragonDrop-trigger');
 
-                    // Hide initial submenus
-                    $el.addClass('dragonDrop')
-                    .find('>'+ settings.triggerParentEl +':has('+ settings.submenuEl +')').addClass('dragonDrop-trigger')
-                    .find(settings.submenuEl).addClass('dragonDrop-submenu').hide();
 
                     // Open on click
-                    $el.on(settings.action, settings.triggerParentEl +':has('+ settings.submenuEl +') > '+ settings.triggerEl +'', function(){
-                        // Close click menu's if clicked again
-                        if(settings.action == 'click' && $(this).parents(settings.triggerParentEl).hasClass('dragonDrop-open')){
+                    $el.on(settings.action,  $triggerElement, function(){
+                        // Close click menus if clicked again
+                           
+
+                        if(settings.action == 'click' && $el.hasClass('dragonDrop-open')){
                             settings.beforeHide.call(this);
-                            $(this).parents(settings.triggerParentEl).removeClass('dragonDrop-open').find(settings.submenuEl).hide();
+                            $el.removeClass('dragonDrop-open');
+                            $menuElement.hide();
                             settings.afterHide.call(this);
                             return false;
                         }
 
-                        // Hide open menus
+                        // Hide ALL open menus
                         settings.beforeHide.call(this);
                         $('.dragonDrop-open').removeClass('dragonDrop-open').find('.dragonDrop-submenu').hide();
                         settings.afterHide.call(this);
 
                         // Open this menu
                         settings.beforeShow.call(this);
-                        $(this).parents(settings.triggerParentEl).addClass('dragonDrop-open').find(settings.submenuEl).show();
+                        $el.addClass('dragonDrop-open');
+                        $menuElement.show();
                         settings.afterShow.call(this);
 
                         return false;
@@ -57,15 +59,18 @@ if (typeof define === 'function' && define.amd) {
                     // Close if outside click
                     $(document).on('click', function(){
                         settings.beforeHide.call(this);
-                        $('.dragonDrop-open').removeClass('dragonDrop-open').find('.dragonDrop-submenu').hide();
+                        $('.dragonDrop-open').removeClass('dragonDrop-open')
+                        $menuElement.hide();
                         settings.afterHide.call(this);
                     });
 
                     // If hover
                     if(settings.action == 'mouseenter'){
                         $el.on('mouseleave', function(){
+                            console.log( 'mouseleave' );
                             settings.beforeHide.call(this);
-                            $(this).removeClass('dragonDrop-open').find(settings.submenuEl).hide();
+                            $el.removeClass('dragonDrop-open');
+                            $menuElement.hide();
                             settings.afterHide.call(this);
                         });
                     }
@@ -88,9 +93,8 @@ if (typeof define === 'function' && define.amd) {
 
     $.fn.dragonDrop.defaults = {
         action: 'click', // The open action for the trigger
-        submenuEl: 'ul', // The submenu element
-        triggerEl: 'a', // The trigger element
-        triggerParentEl: 'li', // The trigger parent element
+        submenuEl: '[data-menu-content]', // The submenu element
+        triggerEl: '[data-menu-trigger]', // The trigger element
         afterLoad: function(){}, // Triggers when plugin has loaded
         beforeShow: function(){}, // Triggers before submenu is shown
         afterShow: function(){}, // Triggers after submenu is shown

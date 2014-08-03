@@ -8,13 +8,14 @@
  */
 
 /* These styles assume you are using ul and li */
-.dropit {
+.dragonDrop {
     list-style: none;
 	padding: 0;
 	margin: 0;
+    position: relative;
 }
-.dropit .dropit-trigger { position: relative; }
-.dropit .dropit-submenu {
+.dragonDrop .dragonDrop-trigger { position: relative; }
+.dragonDrop .dragonDrop-submenu {
     position: absolute;
     top: 100%;
     left: 0; /* dropdown left or right */
@@ -25,4 +26,4 @@
 	padding: 0;
 	margin: 0;
 }
-.dropit .dropit-open .dropit-submenu { display: block; }
+.dragonDrop .dragonDrop-open .dragonDrop-submenu { display: block; }

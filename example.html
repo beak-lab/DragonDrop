@@ -6,19 +6,19 @@
 	<script src="dragondrop.js"></script>
 </head>
 <body>
-  <ul class="menu">
-    <li>
-        <a href="#">Dropdown</a>
-        <ul>
+  <div data-menu class="menu" >
+    
+        <a href="#" data-menu-trigger>Dropdown</a>
+        <ul data-menu-content>
             <li><a href="#">Some Action 1</a></li>
             <li><a href="#">Some Action 2</a></li>
             <li><a href="#">Some Action 3</a></li>
             <li><a href="#">Some Action 4</a></li>
         </ul>
-    </li>
-</ul>
+    
+</div>
 </body>
 <script type="text/javascript">
-	$('.menu').dragonDrop();
+	$('[data-menu]').dragonDrop({action: 'mouseenter'});
 </script>
 </html>
