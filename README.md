@@ -1,1 +1,1 @@
-Stupidly Simple jQuery Dropdowns - http://dev7studios.com/dropit
+Simple drop buttons, based on dev7's dropit plugin - http://dev7studios.com/dropit
