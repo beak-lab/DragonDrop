@@ -1,3 +1,4 @@
+/*****************  required styles  *****************/
 .dragonDrop-submenu {
   position: absolute;
   z-index: 2;
@@ -13,3 +14,11 @@
   display: none; }
   .is-open.dragonDrop-submenu {
     display: block; }
+
+/*****************  just for looks  *****************/
+.submenu {
+  border: 1px solid #ddd;
+  min-width: 150px; }
+  .submenu li {
+    border-bottom: 1px solid #eee;
+    padding: 1em; }

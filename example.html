@@ -6,33 +6,28 @@
 	<script src="dragondrop.js"></script>
 </head>
 <body>
-	<div class="menu" >
+	<section>
+		<h1>Basic</h1>
 		<a href="#" data-dropdown="content1">Dropdown</a>
-		<ul id="content1" data-dropdown-content>
+		<ul id="content1" class="submenu" data-dropdown-content>
 			<li><a href="#">Some Action 1</a></li>
 			<li><a href="#">Some Action 1</a></li>
 			<li><a href="#">Some Action 1</a></li>
 			<li><a href="#">Some Action 1</a></li>
 		</ul>
-	</div>
-	<div class="menu" >
+	</section>
+
+	<section style="float:right">
+		<h1>Edge<br>detection</h1>
 		<a href="#" data-dropdown="content2">Dropdown</a>
-		<ul id="content2" data-dropdown-content>
-			<li><a href="#">Some Action 3</a></li>
-			<li><a href="#">Some Action 3</a></li>
-			<li><a href="#">Some Action 3</a></li>
-			<li><a href="#">Some Action 3</a></li>
+		<ul id="content2" class="submenu" data-dropdown-content>
+			<li><a href="#">Some Action 1</a></li>
+			<li><a href="#">Some Action 1</a></li>
+			<li><a href="#">Some Action 1</a></li>
+			<li><a href="#">Some Action 1</a></li>
 		</ul>
-	</div>
-	<div class="menu" >
-		<a href="#" data-dropdown="content3">Dropdown</a>
-		<ul id="content3" data-dropdown-content>
-			<li><a href="#">Some Action 2</a></li>
-			<li><a href="#">Some Action 2</a></li>
-			<li><a href="#">Some Action 2</a></li>
-			<li><a href="#">Some Action 2</a></li>
-		</ul>
-	</div>
+	</section>
+
 </body>
 <script type="text/javascript">
 	$('[data-dropdown]').dragonDrop({action: 'click'});

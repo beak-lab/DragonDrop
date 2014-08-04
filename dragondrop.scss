@@ -1,3 +1,5 @@
+/*****************  required styles  *****************/
+
 %dragondrop-menu-content{
     position: absolute;
     z-index: 2;
@@ -22,3 +24,15 @@
 .dragonDrop-submenu{
   @extend %dragondrop-menu-content;
 } 
+
+/*****************  just for looks  *****************/
+
+.submenu{
+	border: 1px solid #ddd;
+	min-width: 150px;
+
+	li{
+		border-bottom: 1px solid #eee;
+		padding: 1em;
+	}
+}
