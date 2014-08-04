@@ -1,0 +1,24 @@
+%dragondrop-menu-content{
+    position: absolute;
+    z-index: 2;
+    display: none;
+}
+
+%dragondrop-menu-content{
+	list-style: none;
+    list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+%dragondrop-menu-content{
+	display: none;
+	&.is-open{
+		display: block;
+	}
+}
+
+
+.dragonDrop-submenu{
+  @extend %dragondrop-menu-content;
+} 

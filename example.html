@@ -1,32 +1,32 @@
 <html>
 <head>
 	<title>Simple example</title>
-	<link rel="stylesheet" type="text/css" href="dropit.css">
+	<link rel="stylesheet" type="text/css" href="dragondrop.css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 	<script src="dragondrop.js"></script>
 </head>
 <body>
-	<div data-menu class="menu" >
-		<a href="#" data-menu-trigger>Dropdown</a>
-		<ul data-menu-content>
+	<div class="menu" >
+		<a href="#" data-dropdown="content1">Dropdown</a>
+		<ul id="content1" data-dropdown-content>
 			<li><a href="#">Some Action 1</a></li>
 			<li><a href="#">Some Action 1</a></li>
 			<li><a href="#">Some Action 1</a></li>
 			<li><a href="#">Some Action 1</a></li>
 		</ul>
 	</div>
-	<div data-menu class="menu" >
-		<a href="#" data-menu-trigger>Dropdown</a>
-		<ul data-menu-content>
+	<div class="menu" >
+		<a href="#" data-dropdown="content2">Dropdown</a>
+		<ul id="content2" data-dropdown-content>
 			<li><a href="#">Some Action 3</a></li>
 			<li><a href="#">Some Action 3</a></li>
 			<li><a href="#">Some Action 3</a></li>
 			<li><a href="#">Some Action 3</a></li>
 		</ul>
 	</div>
-	<div data-menu class="menu" >
-		<a href="#" data-menu-trigger>Dropdown</a>
-		<ul data-menu-content>
+	<div class="menu" >
+		<a href="#" data-dropdown="content3">Dropdown</a>
+		<ul id="content3" data-dropdown-content>
 			<li><a href="#">Some Action 2</a></li>
 			<li><a href="#">Some Action 2</a></li>
 			<li><a href="#">Some Action 2</a></li>
@@ -35,6 +35,6 @@
 	</div>
 </body>
 <script type="text/javascript">
-$('[data-menu]').dragonDrop({action: 'click'});
+	$('[data-dropdown]').dragonDrop({action: 'click'});
 </script>
 </html>
