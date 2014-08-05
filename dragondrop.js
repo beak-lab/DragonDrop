@@ -6,25 +6,33 @@
  * http://www.opensource.org/licenses/mit-license.php
  */
 
+/* global jQuery, $,  define, */
 
- (function (f) {
- 	/* global jQuery, define */
- 	'use strict';
- 	if (typeof define === 'function' && define.amd) {
-		// AMD. Register as an anonymous module depending on jQuery.
-		define(['jquery'], f);
+
+'use strict';
+
+(function (factory) {
+	if (typeof define === 'function' && define.amd) {
+	    // AMD. Register as an anonymous module depending on jQuery.
+	    define(['jquery'], factory);
 	} else {
-		// No AMD. Register plugin with global jQuery object.
-		f(jQuery);
+	    // No AMD. Register plugin with global jQuery object.
+	    factory(jQuery);
 	}
-}
+}(function ($) {
+	$.fn.dragonDrop = function(options) {
+	    return this.each(function() {
+	        new DragonDrop( this, options );
+	    });
+	};
+}));
 
 
 function DragonDrop(element, options){
-	var this.settings 		= $.extend({}, this.defaults, options),
-	this.$el 			= $(element),
-	this.$menuElement 	= $('#' + this.$el.data('dropdown') );
-
+	this.settings 		= $.extend({}, this.defaults, options);
+	this.$trigger 			= $(element);
+	this.$menuElement 	= $('#' + this.$trigger.data('dropdown') );
+    
 	this.init();
 }
 
@@ -32,184 +40,105 @@ function DragonDrop(element, options){
 DragonDrop.prototype = {
 	defaults : {	
 		action		: 'click', // The open action for the trigger
-		triggerEl	: '[data-dropdown]', // The trigger element
 		openClass	: 'is-open',
 		afterLoad	: function(){}, // Triggers when plugin has loaded
 		beforeShow	: function(){}, // Triggers before submenu is shown
 		afterShow	: function(){}, // Triggers after submenu is shown
 		beforeHide	: function(){}, // Triggers before submenu is hidden
 		afterHide	: function(){} // Triggers before submenu is hidden
+
 	},
 
 	init : function(){
 		var plugin = this;
-		plugin.$el.addClass('dragonDrop');
+		this.wwidth = $(window).width();
+		plugin.$trigger.addClass('dragonDrop');
 		plugin.$menuElement.addClass('dragonDrop-submenu');
+		// add click listeners
+		plugin.listen();
+	},
 
+	listen : function(){
+		var plugin = this;
+		
 		// Open on click
-		plugin.$el.on(plugin.settings.action, function(){
+		plugin.$trigger.on(plugin.settings.action, plugin.$trigger, function(e){
+			e.stopPropagation();
 			// Close click menus if clicked again
-			if(plugin.settings.action == 'click' && plugin.$el.hasClass(plugin.settings.openClass)){
-				plugin.settings.beforeHide.call(this);
-				plugin.$el.removeClass(plugin.settings.openClass);
-				plugin.$menuElement.removeClass(plugin.settings.openClass);
-				plugin.settings.afterHide.call(this);
-				return false;
+			if(plugin.settings.action == 'click' && plugin.$trigger.hasClass(plugin.settings.openClass)){
+				plugin.close();
+			}else{
+				plugin.open();
 			}
-
-			// Hide ALL open menus
-			plugin.settings.beforeHide.call(this);
-			$('.dragonDrop').removeClass(plugin.settings.openClass);  // should find a better way to do this
-			$('.dragonDrop-submenu').removeClass(plugin.settings.openClass);
-			plugin.settings.afterHide.call(this);
-
-			// Open this menu
-			plugin.settings.beforeShow.call(this);
-			plugin.$el.addClass(plugin.settings.openClass);
-			plugin.$menuElement.addClass(plugin.settings.openClass);
-			plugin.settings.afterShow.call(this);
-
-			return false;
-
 		});
 
-					// Close if outside click
-					$(document).on('click', function(){
-						settings.beforeHide.call(this);
-						$('.dragonDrop').removeClass(settings.openClass);
-						$menuElement.removeClass(settings.openClass);
-						settings.afterHide.call(this);
-					});
+		// Close if outside click
+		$(document).off('click.dragonDrop')
+			.on('click.dragonDrop', function(){
+				plugin.closeAll();
+			});
 
-					// If hover
-					if(settings.action == 'mouseenter'){
-						$el.on('mouseleave', function(){
-							settings.beforeHide.call(this);
-							$('.dragonDrop').removeClass(settings.openClass);
-							$menuElement.removeClass(settings.openClass);
-							settings.afterHide.call(this);
-						});
-					}
-
-					settings.afterLoad.call(this);
-				}
-			}
-
-
-			(function ($) {
-				'use strict';
-
-				$.fn.dragonDrop = function(method) {
-					var methods = {
-
-						init : function(options) {	
-							return this.each(function() {
-						// var $el = $(this).addClass('dragonDrop'),
-						// settings = $.extend({}, $.fn.dragonDrop.defaults, options),
-						// $menuElement = $('#' + $el.data('dropdown') );
-						// $menuElement.addClass('dragonDrop-submenu');
-
-					// // Open on click
-					// $el.on(settings.action,  $el, function(){
-					// 	// Close click menus if clicked again
-					// 	if(settings.action == 'click' && $el.hasClass(settings.openClass)){
-					// 		settings.beforeHide.call(this);
-					// 		$el.removeClass(settings.openClass);
-					// 		$menuElement.removeClass(settings.openClass);
-					// 		settings.afterHide.call(this);
-					// 		return false;
-					// 	}
-
-					// 	// Hide ALL open menus
-					// 	settings.beforeHide.call(this);
-					// 	$('.dragonDrop').removeClass(settings.openClass);
-					// 	$('.dragonDrop-submenu').removeClass(settings.openClass);
-					// 	settings.afterHide.call(this);
-
-					// 	// Open this menu
-					// 	settings.beforeShow.call(this);
-					// 	$el.addClass(settings.openClass);
-					// 	$menuElement.addClass(settings.openClass);
-
-					// 	settings.afterShow.call(this);
-
-					// 	return false;
-					// });
-
-					// // Close if outside click
-					// $(document).on('click', function(){
-					// 	settings.beforeHide.call(this);
-					// 	$('.dragonDrop').removeClass(settings.openClass);
-					// 	$menuElement.removeClass(settings.openClass);
-					// 	settings.afterHide.call(this);
-					// });
-
-					// // If hover
-					// if(settings.action == 'mouseenter'){
-					// 	$el.on('mouseleave', function(){
-					// 		settings.beforeHide.call(this);
-					// 		$('.dragonDrop').removeClass(settings.openClass);
-					// 		$menuElement.removeClass(settings.openClass);
-					// 		settings.afterHide.call(this);
-					// 	});
-					// }
-
-					// settings.afterLoad.call(this);
-				});
-},
-
-keepOnCanvas : function(){ 
-	var _plugin = this,
-					_left = _plugin.bubbleElement.offset().left, // where the righthand side of the bubble is
-					_wwidth = $window.width();
-
-					_plugin.bubbleElement
-					.css('right', 'auto')
-					.css('white-space', 'inherit');
-					// uhoh, we have overhang on the rhs
-					if( _left + _plugin.bubbleElement.outerWidth() > _wwidth ){
-
-						_plugin.bubbleElement
-						.css('right', _plugin.bubbleElement.offset().left -  _wwidth )
-						.css('white-space' , 'normal');
-					}
-					//seriously!? on the left hand side too? ah geez, that's just GREAT...
-					if( _left < 0 ){
-						_plugin.bubbleElement
-						.css( 'left',  ( _wwidth + _left ) * -1  )
-						.css( 'white-space' , 'normal' ); 
-					};
-
-					_plugin.positionBubble();
-
-				}//if
-
-			// register: function(){
-			// 	$(window).trigger('dragonDropRegister' [this.$el]);
-			// }
-
-		};
-
-		if (methods[method]) {
-			return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-		} else if (typeof method === 'object' || !method) {
-			return methods.init.apply(this, arguments);
-		} else {
-			$.error( 'Method "' +  method + '" does not exist in dragonDrop plugin!');
+		// If hover
+		if(plugin.settings.action == 'mouseenter'){
+			plugin.$trigger.on('mouseleave', function(){
+				plugin.close();
+			});
 		}
 
-	};
+		plugin.settings.afterLoad.call(this);
+	},
 
-	$.fn.dragonDrop.defaults = {
-		action		: 'click', // The open action for the trigger
-		triggerEl	: '[data-dropdown]', // The trigger element
-		openClass	: 'is-open',
-		afterLoad	: function(){}, // Triggers when plugin has loaded
-		beforeShow	: function(){}, // Triggers before submenu is shown
-		afterShow	: function(){}, // Triggers after submenu is shown
-		beforeHide	: function(){}, // Triggers before submenu is hidden
-		afterHide	: function(){} // Triggers before submenu is hidden
-	};
+	open: function(){
+		console.log('opening');
+		// Open this menu
+		var plugin = this;
+		plugin.settings.beforeShow.call(this);
+		plugin.$trigger.addClass(plugin.settings.openClass);
+		plugin.$menuElement.addClass(plugin.settings.openClass);
+		plugin.position();
+		plugin.settings.afterShow.call(this);
+	},
 
+	close: function(){
+		console.log('closing');
+		var plugin = this;
+		plugin.settings.beforeHide.call(this);
+		plugin.$trigger.removeClass(plugin.settings.openClass);
+		plugin.$menuElement.removeClass(plugin.settings.openClass);
+		plugin.settings.afterHide.call(this);
+	},
 
-}));
+	closeAll: function(){
+		// Hide ALL open menus
+		console.log('closing ALL');
+		var plugin = this;
+		plugin.settings.beforeHide.call(this);
+		$('.dragonDrop').removeClass(plugin.settings.openClass);  // should find a better way to do this
+		$('.dragonDrop-submenu').removeClass(plugin.settings.openClass);
+		plugin.settings.afterHide.call(this);
+	},
+
+	position : function(){ 
+		var plugin 		= this,
+		triggerPos 		= plugin.$trigger.offset(),
+		menuPos 		= plugin.$menuElement.offset(),
+		menuWidth		= plugin.$menuElement.outerWidth();
+
+		this.$menuElement.css({
+		 	top: triggerPos.top + plugin.$trigger.outerHeight()
+		});
+		// if putting the menu below the trigger would cause an overhang
+		if( triggerPos.left + menuWidth > this.wwidth ){
+			var overhang = triggerPos.left + menuWidth - this.wwidth;
+			this.$menuElement.css({
+			 	left: triggerPos.left - overhang
+			});
+
+		}else{
+			this.$menuElement.css({
+			 	left: triggerPos.left
+			});
+		}
+
+	}
+};
