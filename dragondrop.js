@@ -6,24 +6,24 @@
  * http://www.opensource.org/licenses/mit-license.php
  */
 
-/* global jQuery, $,  define, */
+/* global jQuery, $, define, console */
 
 
 'use strict';
 
 (function (factory) {
 	if (typeof define === 'function' && define.amd) {
-	    // AMD. Register as an anonymous module depending on jQuery.
-	    define(['jquery'], factory);
+		// AMD. Register as an anonymous module depending on jQuery.
+		define(['jquery'], factory);
 	} else {
-	    // No AMD. Register plugin with global jQuery object.
-	    factory(jQuery);
+		// No AMD. Register plugin with global jQuery object.
+		factory(jQuery);
 	}
 }(function ($) {
 	$.fn.dragonDrop = function(options) {
-	    return this.each(function() {
-	        new DragonDrop( this, options );
-	    });
+		return this.each(function() {
+			new DragonDrop( this, options );
+		});
 	};
 }));
 
@@ -32,7 +32,7 @@ function DragonDrop(element, options){
 	this.settings 		= $.extend({}, this.defaults, options);
 	this.$trigger 			= $(element);
 	this.$menuElement 	= $('#' + this.$trigger.data('dropdown') );
-    
+	
 	this.init();
 }
 
@@ -51,7 +51,7 @@ DragonDrop.prototype = {
 
 	init : function(){
 		var plugin = this;
-		this.wwidth = $(window).width();
+		this.$window = $(window);
 		plugin.$trigger.addClass('dragonDrop');
 		plugin.$menuElement.addClass('dragonDrop-submenu');
 		// add click listeners
@@ -65,7 +65,7 @@ DragonDrop.prototype = {
 		plugin.$trigger.on(plugin.settings.action, plugin.$trigger, function(e){
 			e.stopPropagation();
 			// Close click menus if clicked again
-			if(plugin.settings.action == 'click' && plugin.$trigger.hasClass(plugin.settings.openClass)){
+			if(plugin.settings.action === 'click' && plugin.$trigger.hasClass(plugin.settings.openClass)){
 				plugin.close();
 			}else{
 				plugin.open();
@@ -79,7 +79,7 @@ DragonDrop.prototype = {
 			});
 
 		// If hover
-		if(plugin.settings.action == 'mouseenter'){
+		if(plugin.settings.action === 'mouseenter'){
 			plugin.$trigger.on('mouseleave', function(){
 				plugin.close();
 			});
@@ -119,30 +119,29 @@ DragonDrop.prototype = {
 	},
 
 	position : function(){ 
-		this.$menuElement.css('left', '');
 
 		var plugin 		= this,
 		triggerOff 		= plugin.$trigger.offset(),
 		triggerPos 		= plugin.$trigger.position(),
 		menuWidth		= plugin.$menuElement.outerWidth();
 
-		plugin.log(plugin.wwidth);
+		plugin.log(plugin.$window.width());
 
 		this.$menuElement.css({
-		 	top: triggerPos.top + plugin.$trigger.outerHeight(),
+			top: triggerPos.top + plugin.$trigger.outerHeight(),
 		});
 		// if putting the menu below the trigger would cause an overhang
-		if( triggerOff.left + menuWidth > plugin.wwidth ){
+		if( triggerOff.left + menuWidth > plugin.$window.width() ){
 			plugin.log('overhang detected!'); 
-			var overhang = triggerOff.left + menuWidth - plugin.wwidth;
+			var overhang = triggerOff.left + menuWidth - plugin.$window.width();
 
 			this.$menuElement.css({
-			 	left: triggerPos.left - overhang
+				left: triggerPos.left - overhang
 			});
 
 		}else{
 			this.$menuElement.css({
-			 	left: triggerPos.left
+				left: triggerPos.left
 			});
 		}
 
