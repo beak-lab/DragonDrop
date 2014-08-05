@@ -45,8 +45,8 @@ DragonDrop.prototype = {
 		beforeShow	: function(){}, // Triggers before submenu is shown
 		afterShow	: function(){}, // Triggers after submenu is shown
 		beforeHide	: function(){}, // Triggers before submenu is hidden
-		afterHide	: function(){} // Triggers before submenu is hidden
-
+		afterHide	: function(){}, // Triggers before submenu is hidden
+		debug		: false
 	},
 
 	init : function(){
@@ -89,7 +89,7 @@ DragonDrop.prototype = {
 	},
 
 	open: function(){
-		console.log('opening');
+		this.log('opening');
 		// Open this menu
 		var plugin = this;
 		plugin.settings.beforeShow.call(this);
@@ -100,7 +100,7 @@ DragonDrop.prototype = {
 	},
 
 	close: function(){
-		console.log('closing');
+		this.log('closing');
 		var plugin = this;
 		plugin.settings.beforeHide.call(this);
 		plugin.$trigger.removeClass(plugin.settings.openClass);
@@ -110,7 +110,7 @@ DragonDrop.prototype = {
 
 	closeAll: function(){
 		// Hide ALL open menus
-		console.log('closing ALL');
+		this.log('closing ALL');
 		var plugin = this;
 		plugin.settings.beforeHide.call(this);
 		$('.dragonDrop').removeClass(plugin.settings.openClass);  // should find a better way to do this
@@ -121,7 +121,6 @@ DragonDrop.prototype = {
 	position : function(){ 
 		var plugin 		= this,
 		triggerPos 		= plugin.$trigger.offset(),
-		menuPos 		= plugin.$menuElement.offset(),
 		menuWidth		= plugin.$menuElement.outerWidth();
 
 		this.$menuElement.css({
@@ -140,5 +139,10 @@ DragonDrop.prototype = {
 			});
 		}
 
+	},
+	log: function(s){
+		if (this.settings.debug) {
+			console.log(s);
+		}
 	}
 };
