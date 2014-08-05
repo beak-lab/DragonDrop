@@ -120,7 +120,7 @@ DragonDrop.prototype = {
 
 	position : function(){ 
 		var plugin 		= this,
-		triggerPos 		= plugin.$trigger.offset(),
+		triggerPos 		= plugin.$trigger.position(),
 		menuWidth		= plugin.$menuElement.outerWidth();
 
 		this.$menuElement.css({
