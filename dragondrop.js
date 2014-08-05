@@ -120,6 +120,7 @@ DragonDrop.prototype = {
 
 	position : function(){ 
 		var plugin 		= this,
+		triggerOff 		= plugin.$trigger.offset(),
 		triggerPos 		= plugin.$trigger.position(),
 		menuWidth		= plugin.$menuElement.outerWidth();
 
@@ -129,7 +130,7 @@ DragonDrop.prototype = {
 		 	top: triggerPos.top + plugin.$trigger.outerHeight()
 		});
 		// if putting the menu below the trigger would cause an overhang
-		if( triggerPos.left + menuWidth > plugin.wwidth ){
+		if( triggerOff.left + menuWidth > plugin.wwidth ){
 			plugin.log('overhang!');
 			var overhang = triggerPos.left + menuWidth - plugin.wwidth;
 			this.$menuElement.css({
