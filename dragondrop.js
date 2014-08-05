@@ -46,7 +46,7 @@ DragonDrop.prototype = {
 		afterShow	: function(){}, // Triggers after submenu is shown
 		beforeHide	: function(){}, // Triggers before submenu is hidden
 		afterHide	: function(){}, // Triggers before submenu is hidden
-		debug		: false
+		debug		: true
 	},
 
 	init : function(){
@@ -128,6 +128,7 @@ DragonDrop.prototype = {
 		});
 		// if putting the menu below the trigger would cause an overhang
 		if( triggerPos.left + menuWidth > this.wwidth ){
+			plugin.log('overhang!')
 			var overhang = triggerPos.left + menuWidth - this.wwidth;
 			this.$menuElement.css({
 			 	left: triggerPos.left - overhang
