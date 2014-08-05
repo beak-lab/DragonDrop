@@ -46,7 +46,7 @@ DragonDrop.prototype = {
 		afterShow	: function(){}, // Triggers after submenu is shown
 		beforeHide	: function(){}, // Triggers before submenu is hidden
 		afterHide	: function(){}, // Triggers before submenu is hidden
-		debug		: true
+		debug		: false
 	},
 
 	init : function(){
