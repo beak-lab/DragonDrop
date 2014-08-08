@@ -29,16 +29,15 @@
 
 
 function DragonDrop(element, options){
-	this.settings 		= $.extend({}, this.defaults, options);
-	this.$trigger 			= $(element);
-	this.$menuElement 	= $('#' + this.$trigger.data('dropdown') );
-	
+	this.settings 	= $.extend({}, this.defaults, options);
+	this.element    = element;
 	this.init();
 }
 
 
 DragonDrop.prototype = {
 	defaults : {	
+		context     : null,  //optionally pass in a context to work with oyher than the whole dom
 		action		: 'click', // The open action for the trigger
 		openClass	: 'is-open',
 		afterLoad	: function(){}, // Triggers when plugin has loaded
@@ -51,11 +50,16 @@ DragonDrop.prototype = {
 
 	init : function(){
 		var plugin = this;
-		this.$window = $(window);
+		
+		plugin.settings.context = plugin.settings.context ? plugin.settings.context : $('body');
+		
+		plugin.$trigger = $(plugin.element);
+		plugin.$menuElement = plugin.settings.context.find('#' + plugin.$trigger.data('dropdown') );
 		plugin.$trigger.addClass('dragonDrop');
 		plugin.$menuElement.addClass('dragonDrop-submenu');
 		// add click listeners
 		plugin.listen();
+		console.log(plugin.settings.context);
 	},
 
 	listen : function(){
@@ -97,6 +101,7 @@ DragonDrop.prototype = {
 		plugin.$menuElement.addClass(plugin.settings.openClass);
 		plugin.position();
 		plugin.settings.afterShow.call(this);
+
 	},
 
 	close: function(){
@@ -121,19 +126,19 @@ DragonDrop.prototype = {
 	position : function(){ 
 
 		var plugin 		= this,
+		$window         = $(window),
 		triggerOff 		= plugin.$trigger.offset(),
 		triggerPos 		= plugin.$trigger.position(),
 		menuWidth		= plugin.$menuElement.outerWidth();
-
-		plugin.log(plugin.$window.width());
+		
 
 		this.$menuElement.css({
 			top: triggerPos.top + plugin.$trigger.outerHeight(),
 		});
 		// if putting the menu below the trigger would cause an overhang
-		if( triggerOff.left + menuWidth > plugin.$window.width() ){
+		if( triggerOff.left + menuWidth > $window.width() ){
 			plugin.log('overhang detected!'); 
-			var overhang = triggerOff.left + menuWidth - plugin.$window.width();
+			var overhang = triggerOff.left + menuWidth - $window.width();
 
 			this.$menuElement.css({
 				left: triggerPos.left - overhang
