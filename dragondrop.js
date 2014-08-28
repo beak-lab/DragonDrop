@@ -53,7 +53,7 @@ DragonDrop.prototype = {
 	init : function(){
 		var plugin = this;
 		
-		plugin.settings.context = plugin.settings.context ? plugin.settings.context : $('body');
+		if(!plugin.settings.context) plugin.settings.context = $('body');
 		
 		plugin.$trigger = $(plugin.element);
 		plugin.$menuElement = plugin.settings.context.find('#' + plugin.$trigger.data('dropdown') );
@@ -161,7 +161,11 @@ DragonDrop.prototype = {
 					left: plugin.$menuElement.offset().left + plugin.$trigger.outerWidth()
 				});
 				break;
-
+			case 'leftOf':
+				plugin.$menuElement.offset({
+					left: plugin.$menuElement.offset().left - plugin.$menuElement.outerWidth()
+				});
+				break;
 		}
 
 	},

@@ -1,6 +1,6 @@
 {
     "name": "dragondrop",
-    "version": "1.2.2",
+    "version": "1.2.3",
     "main": "dropit.js",
     "description": "dragondrop is a fork of Dropit, which is a jQuery plugin for single level dropdown menu's",
     "license": "MIT",
