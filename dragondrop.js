@@ -47,7 +47,8 @@ DragonDrop.prototype = {
 		afterShow	: function(){}, // Triggers after submenu is shown
 		beforeHide	: function(){}, // Triggers before submenu is hidden
 		afterHide	: function(){}, // Triggers before submenu is hidden
-		debug		: false
+		menuClicked : function(){},
+		debug		: true
 	},
 
 	init : function(){
@@ -77,6 +78,16 @@ DragonDrop.prototype = {
 				plugin.open();
 			}
 		});
+
+		plugin.$menuElement.off('click.dragonDrop')
+			.on('click.dragonDrop', plugin.$menuElement, function(e){
+				plugin.settings.menuClicked.call(plugin.$trigger, plugin.$menuElement, e);
+				// plugin.log(e.target);
+				//plugin.log(plugin.$trigger);
+			});
+
+
+
 
 		// Close if outside click
 		$(document).off('click.dragonDrop')
@@ -164,6 +175,11 @@ DragonDrop.prototype = {
 			case 'leftOf':
 				plugin.$menuElement.offset({
 					left: plugin.$menuElement.offset().left - plugin.$menuElement.outerWidth()
+				});
+				break;
+			case 'over':
+				plugin.$menuElement.offset({
+					top: plugin.$menuElement.offset().top - ( plugin.$menuElement.outerHeight() / 2 )
 				});
 				break;
 		}
