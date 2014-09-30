@@ -75,6 +75,7 @@ DragonDrop.prototype = {
 				plugin.log('closing because submenu is open on click of trigger');
 				plugin.close();
 			}else{
+				plugin.closeAll(); // close all open dragondrops before opening the new one?
 				plugin.open();
 			}
 		});
